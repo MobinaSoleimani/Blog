@@ -69,6 +69,7 @@ const GET_POST_INFO = gql`
         html
       }
       title
+      data_published
       coverPhoto {
         url
       }

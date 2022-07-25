@@ -1,10 +1,10 @@
 import React from "react";
-
 import { useQuery } from "@apollo/client";
 import { GET_AUTHORS_INFO } from "../../graphql/queries";
 import { Avatar, Divider, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import Loader from "../shared/Loader";
+
 
 function Authors() {
   const { loading, data, errors } = useQuery(GET_AUTHORS_INFO);
@@ -28,7 +28,6 @@ function Authors() {
                 display: "flex",
                 alignItems: "center",
                 textDecoration: "none",
-              
               }}
             >
               <Avatar src={author.avatar.url} sx={{ marginLeft: 2 }} />

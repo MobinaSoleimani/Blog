@@ -7,19 +7,26 @@ import { Container } from "@mui/system";
 import { Avatar, Box, Grid, Typography } from "@mui/material";
 import sanitizeHtml from "sanitize-html";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import CommentForm from "../comment/CommentForm";
 import Comments from "../comment/Comments";
+import * as moment from 'jalali-moment';
 
 function BlogPage() {
+
   const { slug } = useParams();
   const navigate = useNavigate();
 
   const { loading, data, errors } = useQuery(GET_POST_INFO, {
     variables: { slug },
   });
-
+  const dateHandler =(date) => {
+    let arr = date.split("-")
+    return(
+    <p>{moment(`${arr[0]}/${arr[1]}/${arr[2]}`).locale('fa').format('YYYY/MM/DD')}</p>
+    )
+  }
   if (loading) return <Loader />;
-
   if (errors) return <h3>Error...</h3>;
 
 
@@ -35,8 +42,26 @@ function BlogPage() {
           >
             {data.post.title}
           </Typography>
+
           <ArrowBackRoundedIcon onClick={() => navigate(-1)} />
         </Grid>
+        <Grid item xs={12} mt={3} display="flex"  justifyContent="start">
+        <Typography
+            component="h2"
+            variant="h5" 
+            mt={3}
+          >
+        <CalendarMonthIcon/>
+          </Typography>
+        <Typography
+            component="h2"
+            variant="h5" 
+            mr={1}
+          >
+        {dateHandler(data.post.data_published)}
+          </Typography>
+        </Grid>
+
         <Grid item xs={12} mt={6}>
           <img
             src={data.post.coverPhoto.url}
@@ -44,6 +69,7 @@ function BlogPage() {
             width="100%"
             style={{ borderRadius: 15 }}
           />
+
         </Grid>
         <Grid item xs={12} mt={7} display="flex" alignItems="center">
           <Avatar

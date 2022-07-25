@@ -19,7 +19,12 @@ function CommentForm({ slug }) {
     if (name && email && text) {
       sendComment();
       setPressed(true);
-    } else {
+    }else if(!/\S+@\S+\.\S+/.test(email)){
+      toast.error(" ایمیل معتبر نیست ", {
+        position: "top-center",
+    });
+  }
+     else {
       toast.warn("تمام فیلد هارو پر کن", {
         position: "top-center",
       });
@@ -63,6 +68,8 @@ function CommentForm({ slug }) {
           variant="outlined"
           sx={{ width: "100%" }}
           value={email}
+          name="email"
+         
           onChange={(e) => setEmail(e.target.value)}
         />
       </Grid>
